@@ -21,7 +21,8 @@ public static unsafe class Pubternal
 
 		/// <summary>Creates new instance of wrapper for LZ4_stream_t.</summary>
 		public FastContext() =>
-			Context = (LL.LZ4_stream_t*) Mem.AllocZero(sizeof(LL.LZ4_stream_t));
+			Context = LL.LZ4_initStream(
+				Mem.Alloc(LL.LZ4_sizeofState(LL.LZ4_HASHLOG)), LL.LZ4_HASHLOG);
 
 		/// <inheritdoc/>
 		protected override void ReleaseUnmanaged() => Mem.Free(Context);
